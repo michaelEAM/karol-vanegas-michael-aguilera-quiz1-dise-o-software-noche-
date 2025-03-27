@@ -7,6 +7,7 @@ package repository;
 
 
 import database.DatabaseConfig;
+import dto.MotocicletaDTO;
 
 import java.sql.Connection;
 
@@ -17,6 +18,8 @@ import java.sql.Statement;
 
 import dto.UsuarioDTO;
 import java.sql.DriverManager;
+import java.util.ArrayList;
+import java.util.List;
 import org.mindrot.jbcrypt.BCrypt;
 import service.UsuarioService;
 
@@ -44,6 +47,28 @@ public class UsuarioRepository {
             return rowsAffected > 0; // Retorna true si se ha insertado el usuario correctamente
         }
     }
+    
+      public List<UsuarioDTO> obtenerTodas() throws SQLException {
+    String query = "SELECT * FROM usuario"; // Ajusta la consulta según tu base de datos
+
+    List<UsuarioDTO> usuarioDTOs = new ArrayList<>();
+    try (Connection conn = DatabaseConfig.getConnection();
+         PreparedStatement ps = conn.prepareStatement(query);
+         ResultSet rs = ps.executeQuery()) {
+
+        while (rs.next()) {
+            // Crear un objeto usuaRIO y agregarlo a la lista
+            UsuarioDTO usuarioDTO = new UsuarioDTO(
+                rs.getInt("id"),
+                rs.getString("nombre_usuario"),
+                rs.getString("password")
+             
+            );
+            usuarioDTOs.add(usuarioDTO);
+        }
+    }
+    return usuarioDTOs;
+}
     
     // Verificar si las credenciales son correctas al hacer login
     public boolean verificarLogin(String nombreUsuario, String password) throws SQLException {
@@ -109,6 +134,19 @@ public class UsuarioRepository {
         }
     }
 
+         public void eliminar(int id) throws SQLException {
+         String query = "DELETE FROM usuario WHERE id = ?"; // Usamos el marcador de posición "?"
+
+    try (Connection connection = DatabaseConfig.getConnection();
+         PreparedStatement statement = connection.prepareStatement(query)) {
+
+        // Establecer el valor del parámetro en la consulta
+        statement.setInt(1, id); // El primer "?" corresponde al parámetro ID
+
+        // Ejecutar la consulta de eliminación
+        statement.executeUpdate();
+    }
+}
   
 }
 

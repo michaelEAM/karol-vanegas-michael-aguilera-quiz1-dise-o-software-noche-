@@ -5,8 +5,9 @@
 package service;
 
 
-import Encriptacion.seguridad;
+
 import database.DatabaseConfig;
+import dto.MotocicletaDTO;
 import exception.InvalidDataException;
 import java.sql.SQLException;
 import repository.MotocicletasRepository;
@@ -14,6 +15,7 @@ import dto.UsuarioDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 import org.mindrot.jbcrypt.BCrypt;
 import validadotor.userValidador;
 import repository.UsuarioRepository;
@@ -55,5 +57,12 @@ public class UsuarioService {
         }
     }
     
+    public List<UsuarioDTO> obtenerTodas() throws SQLException {
+    // Llamar al repositorio para obtener todas las motocicletas
+    return usuarioRepository.obtenerTodas(); // Este método debe devolver una lista de motocicletas
+}
+     public void eliminar(int id) throws SQLException {
+        usuarioRepository.eliminar(id);
+    }
     
 }

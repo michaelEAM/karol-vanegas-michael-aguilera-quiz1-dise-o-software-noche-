@@ -10,22 +10,31 @@ import java.sql.SQLException;
 import exception.InvalidDataException;
 import controlador.MotocicletaController;
 import dto.MotocicletaDTO;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import vista.Login;
 
 /**
  *
  * @author Probook
  */
 public class GestionMotocicleta extends javax.swing.JFrame {
-    
+
     private MotocicletaController motocicletaController;
-     private MotocicletaDTO motocicletaDTO;
+    private MotocicletaDTO motocicletaDTO;
+    private MotocicletaService motocicletaService;
 
     /**
      * Creates new form GestionMotocicleta
      */
-    public GestionMotocicleta() {
+    public GestionMotocicleta() throws SQLException {
+
         initComponents();
-     motocicletaController = new MotocicletaController();
+        motocicletaService = new MotocicletaService();
+        motocicletaController = new MotocicletaController();
+        llenarTabla();
+        setLocationRelativeTo(this);
     }
 
     /**
@@ -52,6 +61,10 @@ public class GestionMotocicleta extends javax.swing.JFrame {
         BtnEliminar = new javax.swing.JButton();
         TxtId = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TblaMotocicletas = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -107,73 +120,115 @@ public class GestionMotocicleta extends javax.swing.JFrame {
 
         jLabel5.setText("Id:");
 
+        TblaMotocicletas.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        TblaMotocicletas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(TblaMotocicletas);
+
+        jButton1.setText("Regresar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Ingreasr el Id para lasgestiones siguientes:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(27, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(BtnBuscar)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(TxtId))
+                        .addComponent(jLabel6)
                         .addComponent(BtnEditar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
-                        .addComponent(BtnEliminar))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(BtnAgregar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(BtnBuscar))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3))
-                        .addGap(27, 27, 27)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(TxtPrecio)
-                            .addComponent(TxtColor, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(TxtCilindraje, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-                            .addComponent(TxtMarca)
-                            .addComponent(TxtId))))
-                .addContainerGap(426, Short.MAX_VALUE))
+                        .addComponent(BtnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(5, 5, 5)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel4)
+                                        .addComponent(jLabel3))
+                                    .addGap(27, 27, 27)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(TxtPrecio)
+                                        .addComponent(TxtColor, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jLabel1))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(TxtCilindraje, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                                        .addComponent(TxtMarca)))))
+                        .addComponent(BtnEliminar)))
+                .addGap(24, 24, 24)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TxtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TxtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(TxtCilindraje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TxtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(13, 13, 13)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
-                    .addComponent(TxtColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BtnAgregar)
-                    .addComponent(BtnBuscar))
-                .addGap(32, 32, 32)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BtnEditar)
-                    .addComponent(BtnEliminar))
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(TxtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(TxtCilindraje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(TxtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(13, 13, 13)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
+                            .addComponent(TxtColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(BtnAgregar)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButton1))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(9, 9, 9)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(BtnBuscar)
+                                    .addComponent(jLabel5)
+                                    .addComponent(TxtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(12, 12, 12)
+                                .addComponent(BtnEditar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(BtnEliminar)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -183,14 +238,14 @@ public class GestionMotocicleta extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(69, 69, 69)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         pack();
@@ -206,80 +261,83 @@ public class GestionMotocicleta extends javax.swing.JFrame {
 
     private void BtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarActionPerformed
         // TODO add your handling code here:
-        
-         String marca = TxtMarca.getText();
-    String cilindraje = TxtCilindraje.getText();
-    String precio = TxtPrecio.getText();
-    String color = TxtColor.getText();
 
-    // Validar que los campos no estén vacíos
-    if (marca.isEmpty() || cilindraje.isEmpty() || precio.isEmpty() || color.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Todos los campos deben ser llenados.", "Error", JOptionPane.ERROR_MESSAGE);
-        return; // Detiene la ejecución si hay campos vacíos
-    }
+        String marca = TxtMarca.getText();
+        String cilindraje = TxtCilindraje.getText();
+        String precio = TxtPrecio.getText();
+        String color = TxtColor.getText();
 
-    try {
-        // Usar el controlador para agregar la motocicleta
-        motocicletaController.createMotocicleta(marca, cilindraje, precio, color);
-        JOptionPane.showMessageDialog(this, "Motocicleta agregada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        
-        // Limpiar los campos de texto después de agregar la motocicleta
-        TxtMarca.setText("");
-        TxtCilindraje.setText("");
-        TxtPrecio.setText("");
-        TxtColor.setText("");
+        // Validar que los campos no estén vacíos
+        if (marca.isEmpty() || cilindraje.isEmpty() || precio.isEmpty() || color.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Todos los campos deben ser llenados.", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Detiene la ejecución si hay campos vacíos
+        }
 
-    } catch (SQLException e) {
-        // Manejo de error si ocurre algún problema con la base de datos
-        JOptionPane.showMessageDialog(this, "Error de base de datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    } catch (InvalidDataException e) {
-        // Manejo de error si la validación de los datos falla
-        JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
+        try {
+            // Usar el controlador para agregar la motocicleta
+            motocicletaController.createMotocicleta(marca, cilindraje, precio, color);
+            JOptionPane.showMessageDialog(this, "Motocicleta agregada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+            // Limpiar los campos de texto después de agregar la motocicleta
+            TxtMarca.setText("");
+            TxtCilindraje.setText("");
+            TxtPrecio.setText("");
+            TxtColor.setText("");
+
+            // Actualizar la tabla con los datos más recientes
+            llenarTabla();
+
+        } catch (SQLException e) {
+            // Manejo de error si ocurre algún problema con la base de datos
+            JOptionPane.showMessageDialog(this, "Error de base de datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (InvalidDataException e) {
+            // Manejo de error si la validación de los datos falla
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_BtnAgregarActionPerformed
 
     private void BtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarActionPerformed
         // TODO add your handling code here:
-        
-        // Obtener el texto del campo TxId
-    String idNuevo = TxtId.getText();
-    
-    if (idNuevo == null || idNuevo.trim().isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID válido para buscar.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
 
-    try {
-        // Convertir el ID a entero
-        int id = Integer.parseInt(idNuevo);
-        
-        // Llamar al controlador para obtener los datos de la motocicleta por ID
-         motocicletaDTO  = motocicletaController.obtenerMotocicleta(id);
-//          MotocicletaDTO motocicletaDTO = motocicletaController.obtenerMotocicleta(id);
-        
-        // Verificar si la motocicleta fue encontrada
-        if (motocicletaDTO != null) {
-            // Mostrar los datos de la motocicleta en los campos de texto
-            TxtMarca.setText(motocicletaDTO.getMarca());
-            TxtCilindraje.setText(motocicletaDTO.getCilindraje());
-            TxtPrecio.setText(motocicletaDTO.getPrecio());
-            TxtColor.setText(motocicletaDTO.getColor());
-        } else {
-            JOptionPane.showMessageDialog(this, "Motocicleta no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
+        // Obtener el texto del campo TxId
+        String idNuevo = TxtId.getText();
+
+        if (idNuevo == null || idNuevo.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID válido para buscar.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "El ID ingresado no es válido. Debe ser un número.", "Error", JOptionPane.ERROR_MESSAGE);
-    } catch (SQLException e) {
-        // Manejo de error si ocurre algún problema con la base de datos
-        JOptionPane.showMessageDialog(this, "Error al buscar la motocicleta: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
+        try {
+            // Convertir el ID a entero
+            int id = Integer.parseInt(idNuevo);
+
+            // Llamar al controlador para obtener los datos de la motocicleta por ID
+            motocicletaDTO = motocicletaController.obtenerMotocicleta(id);
+//          MotocicletaDTO motocicletaDTO = motocicletaController.obtenerMotocicleta(id);
+
+            // Verificar si la motocicleta fue encontrada
+            if (motocicletaDTO != null) {
+                // Mostrar los datos de la motocicleta en los campos de texto
+                TxtMarca.setText(motocicletaDTO.getMarca());
+                TxtCilindraje.setText(motocicletaDTO.getCilindraje());
+                TxtPrecio.setText(motocicletaDTO.getPrecio());
+                TxtColor.setText(motocicletaDTO.getColor());
+            } else {
+                JOptionPane.showMessageDialog(this, "Motocicleta no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El ID ingresado no es válido. Debe ser un número.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException e) {
+            // Manejo de error si ocurre algún problema con la base de datos
+            JOptionPane.showMessageDialog(this, "Error al buscar la motocicleta: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_BtnBuscarActionPerformed
 
     private void BtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditarActionPerformed
         // TODO add your handling code here:
-        
-         String marca = TxtMarca.getText();
+
+        String marca = TxtMarca.getText();
         String cilindraje = TxtCilindraje.getText();
         String precio = TxtPrecio.getText();
         String color = TxtColor.getText();
@@ -294,6 +352,16 @@ public class GestionMotocicleta extends javax.swing.JFrame {
             // Llamamos al controlador para actualizar la motocicleta
             motocicletaController.actualizarMotocicleta(motocicletaDTO.getId(), marca, cilindraje, precio, color);
             JOptionPane.showMessageDialog(this, "Motocicleta actualizada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+      
+            // Limpiar los campos de texto después de agregar la motocicleta
+            TxtMarca.setText("");
+            TxtCilindraje.setText("");
+            TxtPrecio.setText("");
+            TxtColor.setText("");
+            
+            llenarTabla();
+       
+        
         } catch (SQLException e) {
             // Manejo de error de base de datos
             JOptionPane.showMessageDialog(this, "Error de base de datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -305,9 +373,9 @@ public class GestionMotocicleta extends javax.swing.JFrame {
 
     private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
         // TODO add your handling code here:
-        
+
         String idStr = TxtId.getText();
-        
+
         if (idStr == null || idStr.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -324,14 +392,55 @@ public class GestionMotocicleta extends javax.swing.JFrame {
             TxtCilindraje.setText("");
             TxtPrecio.setText("");
             TxtColor.setText("");
+            
+            llenarTabla();
 
         } catch (SQLException e) {
             // Manejo de error de base de datos
             JOptionPane.showMessageDialog(this, "Error al eliminar la motocicleta: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    
+
+
     }//GEN-LAST:event_BtnEliminarActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+
+        Login login = new Login();
+
+        login.setVisible(true);
+
+        dispose();
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void llenarTabla() throws SQLException {
+        // Crear el modelo de la tabla con las columnas adecuadas.
+        DefaultTableModel model = new DefaultTableModel(
+                new String[]{"Id", "Marca", "Cilindraje", "Precio", "Color"}, 0 // Inicia con 0 filas
+        );
+
+        // Obtener las motocicletas desde el controlador o servicio
+        List<MotocicletaDTO> motocicletas = motocicletaController.obtenerMotocicletas();
+
+        // Para cada motocicleta en la lista, agregar una fila al modelo de la tabla
+        for (MotocicletaDTO motocicleta : motocicletas) {
+            // Crear una fila con los datos de la motocicleta
+            Object[] row = {
+                motocicleta.getId(),
+                motocicleta.getMarca(),
+                motocicleta.getCilindraje(),
+                motocicleta.getPrecio(),
+                motocicleta.getColor()
+            };
+
+            // Agregar la fila al modelo
+            model.addRow(row);
+        }
+
+        // Asignar el modelo a la tabla
+        TblaMotocicletas.setModel(model);
+    }
     /**
      * @param args the command line arguments
      */
@@ -372,17 +481,20 @@ public class GestionMotocicleta extends javax.swing.JFrame {
     private javax.swing.JButton BtnBuscar;
     private javax.swing.JButton BtnEditar;
     private javax.swing.JButton BtnEliminar;
+    private javax.swing.JTable TblaMotocicletas;
     private javax.swing.JTextField TxtCilindraje;
     private javax.swing.JTextField TxtColor;
     private javax.swing.JTextField TxtId;
     private javax.swing.JTextField TxtMarca;
     private javax.swing.JTextField TxtPrecio;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
-
