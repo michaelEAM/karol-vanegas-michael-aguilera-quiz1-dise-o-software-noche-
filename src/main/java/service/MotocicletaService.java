@@ -8,6 +8,7 @@ import exception.InvalidDataException;
 import java.sql.SQLException;
 import repository.MotocicletasRepository;
 import dto.MotocicletaDTO;
+import java.util.List;
 import validadotor.userValidador;
 
 public class MotocicletaService {
@@ -29,6 +30,11 @@ public class MotocicletaService {
         motocicletasRepository.guardar(motocicletaDTO);//save(cliente): Es un método que guarda el objeto cliente en la base de datos. Es probable que clientesRepository esté utilizando un marco de persistencia como JPA (Java Persistence API) o algún tipo de repositorio personalizado.
     }
 
+    
+     public List<MotocicletaDTO> obtenerTodas() throws SQLException {
+    // Llamar al repositorio para obtener todas las motocicletas
+    return motocicletasRepository.obtenerTodas(); // Este método debe devolver una lista de motocicletas
+}
     public void actualizar(int id, String marca, String cilindraje, String precio, String color) throws SQLException, InvalidDataException {
         if (!userValidador.validateNombre(marca)) {
             throw new InvalidDataException("Invalid user data");

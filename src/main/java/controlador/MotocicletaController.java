@@ -7,6 +7,7 @@ import service.MotocicletaService;
 import java.sql.SQLException;
 import exception.InvalidDataException;
 import dto.MotocicletaDTO;
+import java.util.List;
 /**
  *
  * @author Probook
@@ -36,6 +37,13 @@ public class MotocicletaController {
         return null;  // Si no se encuentra, devolvemos null
     }
     }
+    
+    public List<MotocicletaDTO> obtenerMotocicletas() throws SQLException {
+    // Llamar al servicio para obtener todas las motocicletas
+    return motocicletaService.obtenerTodas(); // Suponiendo que tienes este método en tu servicio
+}
+    
+   
 
     // Método para actualizar motocicleta
     public void actualizarMotocicleta(int id, String marca, String cilindraje, String precio, String color) throws SQLException, InvalidDataException {

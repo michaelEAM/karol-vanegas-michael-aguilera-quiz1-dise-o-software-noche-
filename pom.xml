@@ -22,5 +22,21 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.28</version> <!-- Usa la última versión disponible -->
         </dependency>
+
+        <!-- Dependencia para encriptación con SHA-256 (Apache Commons Codec) -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.15</version> <!-- Usa la versión más reciente de Apache Commons Codec -->
+        </dependency>
+
+        <!-- Dependencia para el manejo de contraseñas más seguro con bcrypt -->
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version> <!-- Versión más reciente de bcrypt -->
+        </dependency>
+
     </dependencies>
+
 </project>

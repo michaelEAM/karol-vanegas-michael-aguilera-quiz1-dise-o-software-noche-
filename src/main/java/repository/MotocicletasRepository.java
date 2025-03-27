@@ -13,6 +13,8 @@ import database.DatabaseConfig;
 import java.sql.PreparedStatement;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -96,4 +98,28 @@ public class MotocicletasRepository {
         statement.executeUpdate();
     }
 }
+    
+    public List<MotocicletaDTO> obtenerTodas() throws SQLException {
+    String query = "SELECT * FROM motocicleta"; // Ajusta la consulta según tu base de datos
+
+    List<MotocicletaDTO> motocicletas = new ArrayList<>();
+    try (Connection conn = DatabaseConfig.getConnection();
+         PreparedStatement ps = conn.prepareStatement(query);
+         ResultSet rs = ps.executeQuery()) {
+
+        while (rs.next()) {
+            // Crear un objeto MotocicletaDTO y agregarlo a la lista
+            MotocicletaDTO motocicleta = new MotocicletaDTO(
+                rs.getInt("id"),
+                rs.getString("marca"),
+                rs.getString("cilindraje"),
+                rs.getString("precio"),
+                rs.getString("color")
+            );
+            motocicletas.add(motocicleta);
+        }
+    }
+    return motocicletas;
+}
+
 }
