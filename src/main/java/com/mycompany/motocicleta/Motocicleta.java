@@ -6,32 +6,48 @@ package com.mycompany.motocicleta;
 import service.MotocicletaService;
 import java.sql.SQLException;
 import exception.InvalidDataException;
+import java.util.Scanner;
+import service.UsuarioService;
 /**
  *
  * @author Probook
  */
 public class Motocicleta {
 
-//    public static void main(String[] args) {
-//         try {
-//            // Datos de la nueva motocicleta que vamos a agregar.
-//            String marca = "Yamaha";
-//            String cilindraje = "600cc";
-//            String precio = "8000";
-//            String color = "Azul";
-//
-//            // Crea una instancia del servicio para gestionar las motocicletas.
-//            MotocicletaService motocicletaService = new MotocicletaService();
-//
-//            // Llama al método createMotocicleta para agregar una nueva motocicleta.
-//            motocicletaService.createMotocicleta(marca, cilindraje, precio, color);
-//
-//            System.out.println("Motocicleta agregada exitosamente.");
-//        } catch (SQLException e) {
-//            System.err.println("Error de base de datos: " + e.getMessage());
-//        } catch (InvalidDataException e) {
-//            System.err.println("Error de datos inválidos: " + e.getMessage());
-//        }
-//    }
-    
+    public static void main(String[] args) {
+//     
+        
+         // Crear un objeto Scanner para leer la entrada del usuario
+        Scanner scanner = new Scanner(System.in);
+        
+        // Solicitar nombre de usuario y contraseña
+        System.out.print("Ingresa tu nombre de usuario: ");
+        String nombreUsuario = scanner.nextLine();
+        
+        System.out.print("Ingresa tu contraseña: ");
+        String password = scanner.nextLine();
+        
+        // Crear una instancia de UsuarioService
+        UsuarioService usuarioService = new UsuarioService();
+        
+        try {
+            // Registrar el usuario
+            boolean registrado = usuarioService.registrarUsuario(nombreUsuario, password);
+            
+            if (registrado) {
+                System.out.println("Usuario registrado con éxito.");
+            } else {
+                System.out.println("Error al registrar el usuario. Intenta de nuevo.");
+            }
+        } catch (SQLException e) {
+            // Si ocurre algún error con la base de datos
+            System.out.println("Ocurrió un error al intentar registrar al usuario: " + e.getMessage());
+        } catch (Exception e) {
+            // Captura cualquier otro tipo de error
+            System.out.println("Error inesperado: " + e.getMessage());
+        } finally {
+            // Cerrar el scanner
+            scanner.close();
+        }
+    }
 }

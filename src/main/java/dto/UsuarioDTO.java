@@ -4,15 +4,17 @@
  */
 package dto;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 /**
  *
  * @author Probook
  */
 public class UsuarioDTO {
-    
+
     private int id;
     private String nombre_usuario;
-    private String password ;
+    private String password;
 
     public UsuarioDTO(int id, String nombre_usuario, String password) {
         this.id = id;
@@ -44,9 +46,14 @@ public class UsuarioDTO {
         this.password = password;
     }
     
-    
-    
-    
-    
-    
+      // Método para encriptar la contraseña
+    public String getHashedPassword() {
+        return BCrypt.hashpw(this.password, BCrypt.gensalt()); // Encriptar la contraseña antes de almacenarla
+    }
+
+    // Método para verificar si la contraseña ingresada coincide con la encriptada
+    public boolean checkPassword(String inputPassword) {
+        return BCrypt.checkpw(inputPassword, this.password); // Verificar si la contraseña coincide
+    }
+
 }

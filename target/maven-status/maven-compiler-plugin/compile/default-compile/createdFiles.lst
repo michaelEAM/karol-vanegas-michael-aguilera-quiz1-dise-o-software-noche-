@@ -13,8 +13,12 @@ vista\Login$2.class
 controlador\MotocicletaController.class
 exception\InvalidDataException.class
 com\mycompany\motocicleta\Motocicleta.class
+service\UsuarioService.class
+vista\Login$3.class
 vista\GestionMotocicleta$4.class
+controlador\UsuarioController.class
 vista\GestionMotocicleta$6.class
 dto\MotocicletaDTO.class
+Encriptacion\seguridad.class
 vista\GestionMotocicleta$5.class
 service\MotocicletaService.class
