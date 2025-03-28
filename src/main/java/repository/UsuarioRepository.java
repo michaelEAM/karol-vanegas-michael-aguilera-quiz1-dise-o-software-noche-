@@ -4,8 +4,6 @@
  */
 package repository;
 
-
-
 import database.DatabaseConfig;
 import dto.MotocicletaDTO;
 
@@ -21,24 +19,22 @@ import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.List;
 import org.mindrot.jbcrypt.BCrypt;
-import service.UsuarioService;
 
-/**
- *
- * @author Probook
- */
 public class UsuarioRepository {
 
-    
-    
-     // Método para guardar el usuario con la contraseña encriptada
+    // Método para guardar el usuario con la contraseña encriptada
+    /**
+     *
+     * @author Probook
+     */
+    // Método para guardar el usuario con la contraseña encriptada
     public boolean guardarUsuario(UsuarioDTO usuario) throws SQLException {
         String query = "INSERT INTO usuario (nombre_usuario, password) VALUES (?, ?)"; // Consulta SQL para insertar usuario
 
         String hashedPassword = usuario.getPassword(); // Encriptamos la contraseña antes de guardarla
 
         try (Connection conn = DatabaseConfig.getConnection(); // Obtenemos la conexión de DatabaseConfig
-             PreparedStatement ps = conn.prepareStatement(query)) {
+                 PreparedStatement ps = conn.prepareStatement(query)) {
 
             ps.setString(1, usuario.getNombre_usuario()); // Seteamos el nombre de usuario
             ps.setString(2, hashedPassword); // Seteamos la contraseña encriptada
@@ -47,35 +43,32 @@ public class UsuarioRepository {
             return rowsAffected > 0; // Retorna true si se ha insertado el usuario correctamente
         }
     }
-    
-      public List<UsuarioDTO> obtenerTodas() throws SQLException {
-    String query = "SELECT * FROM usuario"; // Ajusta la consulta según tu base de datos
 
-    List<UsuarioDTO> usuarioDTOs = new ArrayList<>();
-    try (Connection conn = DatabaseConfig.getConnection();
-         PreparedStatement ps = conn.prepareStatement(query);
-         ResultSet rs = ps.executeQuery()) {
+    public List<UsuarioDTO> obtenerTodas() throws SQLException {
+        String query = "SELECT * FROM usuario"; // Ajusta la consulta según tu base de datos
 
-        while (rs.next()) {
-            // Crear un objeto usuaRIO y agregarlo a la lista
-            UsuarioDTO usuarioDTO = new UsuarioDTO(
-                rs.getInt("id"),
-                rs.getString("nombre_usuario"),
-                rs.getString("password")
-             
-            );
-            usuarioDTOs.add(usuarioDTO);
+        List<UsuarioDTO> usuarioDTOs = new ArrayList<>();
+        try (Connection conn = DatabaseConfig.getConnection(); PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                // Crear un objeto usuaRIO y agregarlo a la lista
+                UsuarioDTO usuarioDTO = new UsuarioDTO(
+                        rs.getInt("id"),
+                        rs.getString("nombre_usuario"),
+                        rs.getString("password")
+                );
+                usuarioDTOs.add(usuarioDTO);
+            }
         }
+        return usuarioDTOs;
     }
-    return usuarioDTOs;
-}
-    
+
     // Verificar si las credenciales son correctas al hacer login
     public boolean verificarLogin(String nombreUsuario, String password) throws SQLException {
         String query = "SELECT password FROM usuario WHERE nombre_usuario = ?"; // Consulta para obtener el hash de la contraseña
 
         try (Connection conn = DatabaseConfig.getConnection(); // Usamos la conexión de DatabaseConfig
-             PreparedStatement ps = conn.prepareStatement(query)) {
+                 PreparedStatement ps = conn.prepareStatement(query)) {
 
             ps.setString(1, nombreUsuario); // Seteamos el nombre de usuario
             ResultSet rs = ps.executeQuery(); // Ejecutamos la consulta
@@ -91,8 +84,6 @@ public class UsuarioRepository {
 
         return false; // Retorna false si el login no es exitoso
     }
-    
-
 
     public UsuarioDTO buscarPorId(int id) throws SQLException {// Recibe un parámetro id de tipo int que se utiliza para buscar al cliente.
         String query = "SELECT * FROM usuario WHERE id = " + id;// Esta es la consulta SQL que se ejecutará en la base de datos.
@@ -111,12 +102,11 @@ public class UsuarioRepository {
             }
         }
     }
-    
-     public UsuarioDTO buscarPorNombreUsuario(String nombre_usuario) throws SQLException {
+
+    public UsuarioDTO buscarPorNombreUsuario(String nombre_usuario) throws SQLException {
         String query = "SELECT * FROM usuario WHERE nombre_usuario = ?"; // Consulta SQL con un parámetro para el nombre de usuario
 
-        try (Connection connection = DatabaseConfig.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection connection = DatabaseConfig.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, nombre_usuario); // Seteamos el nombre de usuario para la búsqueda
             ResultSet resultSet = statement.executeQuery(); // Ejecutamos la consulta
@@ -134,19 +124,17 @@ public class UsuarioRepository {
         }
     }
 
-         public void eliminar(int id) throws SQLException {
-         String query = "DELETE FROM usuario WHERE id = ?"; // Usamos el marcador de posición "?"
+    public void eliminar(int id) throws SQLException {
+        String query = "DELETE FROM usuario WHERE id = ?"; // Usamos el marcador de posición "?"
 
-    try (Connection connection = DatabaseConfig.getConnection();
-         PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection connection = DatabaseConfig.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
 
-        // Establecer el valor del parámetro en la consulta
-        statement.setInt(1, id); // El primer "?" corresponde al parámetro ID
+            // Establecer el valor del parámetro en la consulta
+            statement.setInt(1, id); // El primer "?" corresponde al parámetro ID
 
-        // Ejecutar la consulta de eliminación
-        statement.executeUpdate();
+            // Ejecutar la consulta de eliminación
+            statement.executeUpdate();
+        }
     }
-}
-  
-}
 
+}
