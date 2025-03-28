@@ -9,7 +9,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <exec.mainClass>com.mycompany.motocicleta.Motocicleta</exec.mainClass> <!-- Asegúrate de que tu clase Main esté en la ruta correcta -->
+        <exec.mainClass>com.mycompany.motocicleta.Main</exec.mainClass> <!-- Asegúrate de que tu clase Main esté en la ruta correcta -->
     </properties>
  <repositories>
         <repository>
