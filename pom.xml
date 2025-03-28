@@ -1,51 +1,37 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.mycompany</groupId>
-
-    <artifactId>Main</artifactId>
-
+    <artifactId>Motocicleta</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <exec.mainClass>com.mycompany.motocicleta.Main</exec.mainClass> <!-- Asegúrate de que tu clase Main esté en la ruta correcta -->
+        <exec.mainClass>com.mycompany.motocicleta.Motocicleta</exec.mainClass> <!-- Asegúrate de que tu clase Main esté en la ruta correcta -->
     </properties>
-
  <repositories>
         <repository>
             <id>github</id>
             <url>https://github.com/michaelEAM/karol-vanegas-michael-aguilera-quiz1-dise-o-software-noche-.git</url>
         </repository>
     </repositories>
-
-    <dependencies>
-        <!-- Dependencia para conectar a MySQL -->
+    <dependencies><!-- Dependencia para conectar a MySQL -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.28</version> <!-- Usa la última versión disponible -->
-        </dependency>
-
-        <!-- Dependencia para encriptación con SHA-256 (Apache Commons Codec) -->
+        </dependency> <!-- Dependencia para encriptación con SHA-256 (Apache Commons Codec) -->
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
             <version>1.15</version> <!-- Usa la versión más reciente de Apache Commons Codec -->
-        </dependency>
-
-        <!-- Dependencia para el manejo de contraseñas más seguro con bcrypt -->
+        </dependency><!-- Dependencia para el manejo de contraseñas más seguro con bcrypt -->
         <dependency>
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>
             <version>0.4</version> <!-- Versión más reciente de bcrypt -->
         </dependency>
-
     </dependencies>
-
 </project>

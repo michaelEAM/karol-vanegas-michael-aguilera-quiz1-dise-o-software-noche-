@@ -13,6 +13,7 @@ import dto.UsuarioDTO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import vista.Login;
+import vista.GestionUsuario;
 
 /**
  *

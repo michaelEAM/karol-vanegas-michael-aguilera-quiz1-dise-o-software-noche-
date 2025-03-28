@@ -5,9 +5,9 @@ import repository.UsuarioRepository;
 import java.sql.SQLException;
 import java.util.List;
 
-import service.UsuariosService;
+import service.UsuarioService;
 import dto.UsuarioDTO;
-import service.UsuariosService;
+import service.UsuarioService;
 
         
 
@@ -20,11 +20,11 @@ public class UsuarioController {
     
      private UsuarioRepository usuarioRepository;
 
-     UsuariosService usuarioService;
+     UsuarioService usuarioService;
 
     public UsuarioController() {
         usuarioRepository = new UsuarioRepository();
-          usuarioService = new UsuariosService(); // Inicializa el servicio
+          usuarioService = new UsuarioService(); // Inicializa el servicio
 
     
     }
