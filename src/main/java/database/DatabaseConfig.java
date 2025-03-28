@@ -7,7 +7,13 @@ package database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+<<<<<<< HEAD
 
+=======
+import org.mindrot.jbcrypt.BCrypt;
+import java.sql.*;
+import dto.UsuarioDTO;
+>>>>>>> 8d70d34c0315ec0044720c3d791662a09f8f960c
 
 /**
  *

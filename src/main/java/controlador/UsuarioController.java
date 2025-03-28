@@ -1,12 +1,25 @@
+<<<<<<< HEAD
 
+=======
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+>>>>>>> 8d70d34c0315ec0044720c3d791662a09f8f960c
 package controlador;
 import dto.MotocicletaDTO;
 import repository.UsuarioRepository;
 import java.sql.SQLException;
 import java.util.List;
+<<<<<<< HEAD
 import service.UsuariosService;
 import dto.UsuarioDTO;
 import service.UsuariosService;
+=======
+import service.UsuarioService;
+import dto.UsuarioDTO;
+        
+>>>>>>> 8d70d34c0315ec0044720c3d791662a09f8f960c
 
 /**
  *
@@ -15,11 +28,14 @@ import service.UsuariosService;
 public class UsuarioController {
     
      private UsuarioRepository usuarioRepository;
+
      UsuariosService usuarioService;
 
     public UsuarioController() {
         usuarioRepository = new UsuarioRepository();
           usuarioService = new UsuariosService(); // Inicializa el servicio
+
+    
     }
 
     // Verificar login
