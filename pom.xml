@@ -4,11 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.mycompany</groupId>
-<<<<<<< HEAD
+
     <artifactId>Main</artifactId>
-=======
-    <artifactId>Motocicleta</artifactId>
->>>>>>> 8d70d34c0315ec0044720c3d791662a09f8f960c
+
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -18,16 +16,14 @@
         <maven.compiler.target>21</maven.compiler.target>
         <exec.mainClass>com.mycompany.motocicleta.Main</exec.mainClass> <!-- Asegúrate de que tu clase Main esté en la ruta correcta -->
     </properties>
-<<<<<<< HEAD
+
  <repositories>
         <repository>
             <id>github</id>
             <url>https://github.com/michaelEAM/karol-vanegas-michael-aguilera-quiz1-dise-o-software-noche-.git</url>
         </repository>
     </repositories>
-=======
 
->>>>>>> 8d70d34c0315ec0044720c3d791662a09f8f960c
     <dependencies>
         <!-- Dependencia para conectar a MySQL -->
         <dependency>

@@ -22,17 +22,17 @@ import vista.Login;
  */
 public class gestionUsuario extends javax.swing.JFrame {
 
-    
     UsuarioController usuarioController;
+
     /**
      * Creates new form gestionUsuario
      */
     public gestionUsuario() throws SQLException {
-        
+
         usuarioController = new UsuarioController();
         initComponents();
         llenarTabla();
-         setLocationRelativeTo(this);
+        setLocationRelativeTo(this);
     }
 
     /**
@@ -179,119 +179,115 @@ public class gestionUsuario extends javax.swing.JFrame {
 
     private void BtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarActionPerformed
         // TODO add your handling code here:
-        
-       // Obtener el nombre de usuario y la contraseña desde los campos de texto
-    String nombreUsuario = TxtNombre.getText();  // Usamos el JTextField para nombre de usuario
-    String password = TxtClave.getText();  // Usamos el JTextField para la contraseña
 
-    // Validar que los campos no estén vacíos
-    if (nombreUsuario.isEmpty() || password.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Todos los campos deben ser llenados.", "Error", JOptionPane.ERROR_MESSAGE);
-        return; // Detiene la ejecución si hay campos vacíos
-    }
+        // Obtener el nombre de usuario y la contraseña desde los campos de texto
+        String nombreUsuario = TxtNombre.getText();  // Usamos el JTextField para nombre de usuario
+        String password = TxtClave.getText();  // Usamos el JTextField para la contraseña
 
-    // Crear una instancia del controlador para registrar el usuario
-    UsuarioController usuarioController = new UsuarioController();
-
-    // Registrar el usuario llamando al controlador
-    boolean registrado = usuarioController.registrarUsuario(nombreUsuario, password);
-
-    if (registrado) {
-        // Si el registro es exitoso
-        JOptionPane.showMessageDialog(this, "Usuario registrado con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        // Limpiar los campos de texto después de agregar el usuario
-        TxtNombre.setText("");
-        TxtClave.setText("");
-        try {
-            llenarTabla();
-        } catch (SQLException ex) {
-            Logger.getLogger(gestionUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        // Validar que los campos no estén vacíos
+        if (nombreUsuario.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Todos los campos deben ser llenados.", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Detiene la ejecución si hay campos vacíos
         }
-        
-        
-    } else {
-        // Si no se pudo registrar el usuario
-        JOptionPane.showMessageDialog(this, "Error al registrar el usuario. Intenta nuevamente.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
+
+        // Crear una instancia del controlador para registrar el usuario
+        UsuarioController usuarioController = new UsuarioController();
+
+        // Registrar el usuario llamando al controlador
+        boolean registrado = usuarioController.registrarUsuario(nombreUsuario, password);
+
+        if (registrado) {
+            // Si el registro es exitoso
+            JOptionPane.showMessageDialog(this, "Usuario registrado con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            // Limpiar los campos de texto después de agregar el usuario
+            TxtNombre.setText("");
+            TxtClave.setText("");
+            try {
+                llenarTabla();
+            } catch (SQLException ex) {
+                Logger.getLogger(gestionUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else {
+            // Si no se pudo registrar el usuario
+            JOptionPane.showMessageDialog(this, "Error al registrar el usuario. Intenta nuevamente.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_BtnAgregarActionPerformed
 
     private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
         // TODO add your handling code here:
-        
-         // Obtener el ID de la motocicleta desde el campo de texto
-    String idText = TxtId.getText(); // Suponiendo que TxtId es un JTextField
-    if (idText.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "El campo de ID está vacío. Ingrese un ID válido.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
 
-    try {
-        int id = Integer.parseInt(idText); // Convertimos el texto a un entero
+        // Obtener el ID de la motocicleta desde el campo de texto
+        String idText = TxtId.getText(); // Suponiendo que TxtId es un JTextField
+        if (idText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo de ID está vacío. Ingrese un ID válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-        // Crear una instancia del controlador y llamar al método de eliminación
-        UsuarioController usuarioController  = new UsuarioController();
-        usuarioController.eliminarUsuario(id); // Llama al controlador para eliminar la motocicleta
-        
-        // Mostrar un mensaje indicando que la motocicleta fue eliminada
-        JOptionPane.showMessageDialog(this, "Usuario eliminado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        
-        // Aquí puedes actualizar la tabla para reflejar los cambios si es necesario
-        llenarTabla(); // Llama al método para actualizar la tabla con los datos actualizados
-        
-    } catch (NumberFormatException e) {
-        // Si el ID no es un número válido
-        JOptionPane.showMessageDialog(this, "Por favor ingrese un ID válido.", "Error", JOptionPane.ERROR_MESSAGE);
-    } catch (SQLException e ) {
-        // Si ocurre algún error al eliminar
-        JOptionPane.showMessageDialog(this, "Error al eliminar el usuario: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
-    
+        try {
+            int id = Integer.parseInt(idText); // Convertimos el texto a un entero
+
+            // Crear una instancia del controlador y llamar al método de eliminación
+            UsuarioController usuarioController = new UsuarioController();
+            usuarioController.eliminarUsuario(id); // Llama al controlador para eliminar la motocicleta
+
+            // Mostrar un mensaje indicando que la motocicleta fue eliminada
+            JOptionPane.showMessageDialog(this, "Usuario eliminado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+            // Aquí puedes actualizar la tabla para reflejar los cambios si es necesario
+            llenarTabla(); // Llama al método para actualizar la tabla con los datos actualizados
+
+        } catch (NumberFormatException e) {
+            // Si el ID no es un número válido
+            JOptionPane.showMessageDialog(this, "Por favor ingrese un ID válido.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException e) {
+            // Si ocurre algún error al eliminar
+            JOptionPane.showMessageDialog(this, "Error al eliminar el usuario: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_BtnEliminarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         // TODO add your handling code here:
-        
-        Login login  = new Login();
-        
+        Login login = new Login();
+
         login.setVisible(true);
-        
+
         dispose();
-        
-        
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    
-    
-     private void llenarTabla() throws SQLException {
+    private void llenarTabla() throws SQLException {
         // Crear el modelo de la tabla con las columnas adecuadas.
-    DefaultTableModel model = new DefaultTableModel(
-            new String[]{"Id", "Nombre Usuario", "Contraseña"}, 0 // Cambié las columnas para que coincidan con los usuarios
-    );
+        DefaultTableModel model = new DefaultTableModel(
+                new String[]{"Id", "Nombre Usuario", "Contraseña"}, 0 // Cambié las columnas para que coincidan con los usuarios
+        );
 
-    // Obtener los usuarios desde el controlador o servicio
-    List<UsuarioDTO> usuarios = usuarioController.obtenerUsuarios();
+        // Obtener los usuarios desde el controlador o servicio
+        List<UsuarioDTO> usuarios = usuarioController.obtenerUsuarios();
 
-    // Para cada usuario en la lista, agregar una fila al modelo de la tabla
-    for (UsuarioDTO usuario : usuarios) {
-        // Crear una fila con los datos del usuario
-        Object[] row = {
-            usuario.getId(),
-            usuario.getNombre_usuario(),
-            usuario.getPassword()  // Si deseas mostrar la contraseña, aunque normalmente se omite por seguridad
-        };
+        // Para cada usuario en la lista, agregar una fila al modelo de la tabla
+        for (UsuarioDTO usuario : usuarios) {
+            // Crear una fila con los datos del usuario
+            Object[] row = {
+                usuario.getId(),
+                usuario.getNombre_usuario(),
+                usuario.getPassword() // Si deseas mostrar la contraseña, aunque normalmente se omite por seguridad
+            };
 
-        // Agregar la fila al modelo
-        model.addRow(row);
-    }
+            // Agregar la fila al modelo
+            model.addRow(row);
+        }
 
-    // Asignar el modelo a la tabla
-    TblUsuarios.setModel(model); // Asegúrate de que el nombre de la tabla sea correc
+        // Asignar el modelo a la tabla
+        TblUsuarios.setModel(model); // Asegúrate de que el nombre de la tabla sea correc
     }
     /**
-     * 
-     * 
-     * 
+     *
+     *
+     *
      * @param args the command line arguments
      */
 //    public static void main(String args[]) {
