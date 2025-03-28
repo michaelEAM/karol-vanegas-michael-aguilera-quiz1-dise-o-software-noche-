@@ -20,8 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.mindrot.jbcrypt.BCrypt;
 
-import service.UsuariosService;
-
 public class UsuarioRepository {
 
     // Método para guardar el usuario con la contraseña encriptada
